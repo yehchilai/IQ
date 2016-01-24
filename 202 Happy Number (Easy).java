@@ -23,25 +23,17 @@ public class Solution {
     public boolean isHappy(int n) {
         if(n < 0) return false;
         if(n == 1) return true;
-        ArrayList<Integer> digits = new ArrayList<Integer>();
+        int sum = 0;
         HashSet<Integer> repeat = new HashSet<Integer>();
-        while(n != 1){
-        	if(repeat.add(n) == false) return false;
+        while(repeat.add(n)){
         	while(n >= 10){
-    			digits.add(n%10);
-    			n = n/10;
+    			sum += (int)(n%10) * (int)(n%10);
+    			n = (int)(n/10);
         	}
-        	n = n^2;
-        	for(int digit : digits){
-        		n += digit ^ 2;
-        	}
-        	digits.clear();
+        	n = n*n + sum;
+        	if(n == 1) return true;
+        	sum = 0;
         }
-        return true;
-        // if(n == 1){
-        // 	return true;
-        // }else{
-        // 	return false;
-        // }
+        return false;
     }
 }
