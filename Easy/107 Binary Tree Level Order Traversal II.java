@@ -36,7 +36,8 @@ Here's an example:
 The above binary tree is serialized as "{1,2,3,#,#,4,#,#,5}".
 
 
-Time Complexity: O()
+Time Complexity: O(N) , N : the number of nodes
+Hint: BFS
 */
 
 /**
@@ -50,13 +51,22 @@ Time Complexity: O()
  */
 public class Solution {
     public List<List<Integer>> levelOrderBottom(TreeNode root) {
-        Lsit<List<Integer>> result = new List<List<Integer>>();
+        List<List<Integer>> result = new ArrayList<List<Integer>>();
+        Queue<TreeNode> q = new LinkedList<TreeNode>();
+        if(root == null) return result;
+        q.add(root); 
 
-
-    }
-
-    public List<Integer> levelOrderBottom(TreeNode node){
-    	List<Integer> level = new List<Integer>();
-    	if(node == null) return null;
+        while(!q.isEmpty()){
+        	List<Integer> tmp = new ArrayList<Integer>();
+        	int length = q.size();
+        	for(int i = 0; i < length; i++){
+        		TreeNode node = q.poll();
+        		tmp.add(node.val);
+        		if(node.left != null) q.add(node.left);
+        		if(node.right != null) q.add(node.right);
+        	}
+        	result.add(0, tmp);
+        }
+        return result;
     }
 }
