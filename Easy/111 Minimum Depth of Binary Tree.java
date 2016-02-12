@@ -22,15 +22,11 @@ Time Complexity: O()
 public class Solution {
 	
     public int minDepth(TreeNode root) {
-        
         if(root == null) return 0;
-        
-        return Math.min(depth(root.left, 1), depth(root.right, 1));
-    }
-
-    public int depth(TreeNode node, int depth){
-    	if(node == null) return depth;
-    	
-        return Math.min(depth(node.left, depth + 1), depth(node.right, depth + 1));
+        if(root.left != null && root.right != null){
+            return Math.min(minDepth(root.left), minDepth(root.right)) + 1;
+        }else{
+            return Math.max(minDepth(root.left), minDepth(root.right)) + 1;
+        }
     }
 }
