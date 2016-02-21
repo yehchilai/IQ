@@ -28,11 +28,11 @@ public class Solution {
         for(int i = 0; i < s.length(); i++){
         	if(stringS.containsKey(s.charAt(i)) ^ stringT.containsKey(t.charAt(i))){
         		return false;
-        	}else if (stringS.containsKey(.charAt(i)) && stringT.containsKey(t.charAt(i))) {
-        		if(stringS.get(s.charAt(i)) != stringT.get(t.charAt(i)) return false;
+        	}else if (stringS.containsKey(s.charAt(i)) && stringT.containsKey(t.charAt(i))) {
+        		if(stringS.get(s.charAt(i)) != stringT.get(t.charAt(i))) return false;
         	}else{
-        		stringS.put(s.charAt(i));
-    			stringT.put(t.charAt(i));
+        		stringS.put(s.charAt(i), i);
+    			stringT.put(t.charAt(i), i);
         	}
         }
         return true;
