@@ -10,23 +10,54 @@ The brackets must close in the correct order, "()" and "()[]{}" are all valid bu
 */
 public class Solution {
     public boolean isValid(String s) {
-        int length = s.length();
-        Stack stack = new Stack();
-        for(int i = 0; i < length; i++){
-        	if(s.charAt(i) == '(' || s.charAt(i) == '[' || s.charAt(i) == '{'){
-        		stack.push(s.charAt(i));
+       	char[] str = s.toCharArray();
+        Stack<Character> stack = new Stack<Character>();
+        for(int i = 0; i < str.length; i++){
+        	if(str[i] == '(' || str[i] == '[' || str[i] == '{'){
+        		stack.push(str[i]);
         	}else{
-        		char tmp = stack.pop();
-        		switch (tmp){
+        	    if(stack.isEmpty()) return false; // need to ckeck 
+        		switch (stack.pop()){
         			case '(':
-        				if(s.charAt(i) != ')') return false;
+        				if(str[i] != ')') return false;
+        				break; // need to break
         			case '[':
-        				if(s.charAt(i) != ']') return false;
+        				if(str[i] != ']') return false;
+        				break;
         			case '{':
-        				if(s.charAt(i) != '}') return false;
+        				if(str[i] != '}') return false;
+        				break;
         		}
         	}
         }
+        if(!stack.isEmpty()) return false;
         return true;
     }
+}
+// Alternative is from https://leetcode.com/discuss/68262/java-0ms-stack-solution
+public boolean isValid(String s) {
+    char[] cs = s.toCharArray();
+    if (cs.length % 2 != 0)
+        return false;
+    Stack<Character> stack = new Stack<Character>();
+    for(int i=0;i<cs.length;i++){
+        if(cs[i]=='[' || cs[i] == '(' || cs[i] == '{'){
+            stack.push(cs[i]);
+        }else{
+            if(stack.isEmpty()) return false;
+            switch (stack.pop()){
+            case '(':
+                if(cs[i]!=')') return false;
+                break;
+            case '[':
+                if(cs[i]!=']') return false;
+                break;
+            case '{':
+                if(cs[i]!='}') return false;
+                break;
+            }
+        }
+    }
+    if(!stack.isEmpty()) return false;
+    return true;
 }
