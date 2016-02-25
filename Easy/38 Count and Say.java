@@ -14,6 +14,7 @@ Note: The sequence of integers will be represented as a string.
 
 Time Complexity: O()
 */
+// 22ms
 public class Solution {
     public String countAndSay(int n) {
     	String result = "1";
@@ -35,5 +36,31 @@ public class Solution {
         	result += Integer.toString(count) + Character.toString(previous);
         }
         return result;
+    }
+}
+// alternative(2ms) : https://leetcode.com/discuss/79263/java-easy-to-read-also-fast
+public class Solution {
+   public String countAndSay(int n) {
+        String ret = ""+1;
+    
+        while(--n  > 0)
+            ret = apply(ret);
+    
+        return ret;
+    }
+    
+    String apply(String s){
+        StringBuilder ret = new StringBuilder();
+    
+        for(int i = 0, count =0; i  < s.length() ; ){
+            while(i + count < s.length() && s.charAt(i) == s.charAt(i + count))
+                count ++;
+    
+            ret.append(count).append(s.charAt(i));
+            i += count; 
+            count = 0;
+        }
+    
+        return ret.toString();
     }
 }
