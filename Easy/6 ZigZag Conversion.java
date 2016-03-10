@@ -14,16 +14,20 @@ Write the code that will take a string and make this conversion given a number o
 string convert(string text, int nRows);
 convert("PAYPALISHIRING", 3) should return "PAHNAPLSIIGYIR".
 
-Time Complexity: O()
+Time Complexity: O(N)
 */
+// 13ms
 public class Solution {
     public String convert(String s, int numRows) {
-    	if(numRows == 0) return s;
+    	if(numRows == 1) return s;
         StringBuilder[] sb = new StringBuilder[numRows];
         boolean rev = false;
         int index = 0;
         int row = 0;
         int len = s.length();
+        for (int i = 0; i < sb.length; i++) {
+		    sb[i] = new StringBuilder("");
+		}
         while(index < len){
         	if(rev){
         		sb[row].append(s.charAt(index));
@@ -31,15 +35,18 @@ public class Solution {
         		row--;
         		if(row == 0){
         			rev = false;
-        			row++;
+        			row = 0;
+        		}else if(row < 0){
+        		    rev = false;
+        			row = 1;
         		}
         	}else{
         		sb[row].append(s.charAt(index));
         		index++;
         		row++;
-        		if(row == numRows){
+        		if(row >= numRows){
         			rev = true;
-        			row = row - 2;
+        			row = numRows - 2;
         		} 
         	}
         }
@@ -47,5 +54,21 @@ public class Solution {
         	sb[0].append(sb[i].toString());
         }
         return sb[0].toString();
+    }
+}
+
+// alternative: 6ms
+public class Solution {
+    public String convert(String s, int numRows) {
+        if(numRows < 2 || s.length() < numRows) return s;
+        char[] converted = new char[s.length()];
+        int step = (numRows - 1) << 1, index = 0;
+        for(int i = 0; i <= numRows - 1; ++i) {
+            for(int j = i, addChar = step - i; j < s.length(); j += step, addChar += step) {
+                converted[index++] = s.charAt(j);
+                if(i % (numRows - 1) != 0 && addChar < s.length()) converted[index++] = s.charAt(addChar);
+            }
+        }
+        return new String(converted);
     }
 }
