@@ -2,12 +2,52 @@
 This question is from https://leetcode.com/problems/valid-parentheses/
 Difficulty: easy
 
-Given a string containing just the characters '(', ')', '{', '}', '[' and ']', 
+Given a string containing just the characters '(', ')', '{', '}', '[' and ']',
 determine if the input string is valid.
 
 The brackets must close in the correct order, "()" and "()[]{}" are all valid but "(]" and "([)]" are not.
 
 */
+class Solution {
+    public boolean isValid(String s) {
+        // spacial case
+        if(s == null) return false;
+        // string length
+        char[] cArr = s.toCharArray();
+        if(cArr.length == 0) return true;
+
+        // parentheses stack
+        Stack<Character> stack = new Stack();
+        // go through the string
+        for(int i = 0; i < cArr.length; i++){
+            switch(cArr[i]){
+                case '}':
+                    if(stack.empty() || stack.peek() != '{') return false;
+                    stack.pop();
+                    break;
+                case ']':
+                    if(stack.empty() || stack.peek() != '[') return false;
+                    stack.pop();
+                    break;
+                case ')':
+                    if(stack.empty() || stack.peek() != '(') return false;
+                    stack.pop();
+                    break;
+                default:
+                    stack.push(cArr[i]);
+                    break;
+            }
+        }
+
+        if (stack.empty()){
+            return true;
+        }else{
+            return false;
+        }
+    }
+}
+
+
 public class Solution {
     public boolean isValid(String s) {
        	char[] str = s.toCharArray();
@@ -16,7 +56,7 @@ public class Solution {
         	if(str[i] == '(' || str[i] == '[' || str[i] == '{'){
         		stack.push(str[i]);
         	}else{
-        	    if(stack.isEmpty()) return false; // need to ckeck 
+        	    if(stack.isEmpty()) return false; // need to ckeck
         		switch (stack.pop()){
         			case '(':
         				if(str[i] != ')') return false;
