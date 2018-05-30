@@ -1,6 +1,6 @@
 /*
 This question is from https://leetcode.com/problems/two-sum-ii-input-array-is-sorted/
-Difficulty: medium
+Difficulty: easy
 
 Given an array of integers that is already sorted in ascending order, find two numbers such that they add up to a specific target number.
 

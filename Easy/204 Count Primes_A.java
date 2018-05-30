@@ -13,7 +13,7 @@ Time Complexity: O(N log logN)
 
 
 /* Hint !!!!!
-see hits on https://leetcode.com/problems/count-primes/
+see hits on https://leetcode.com/problems/count-primes/hints/
 */
 public class Solution {
     public int countPrimes(int n) {

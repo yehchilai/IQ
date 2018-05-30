@@ -1,8 +1,8 @@
 /*
 This question is from https://leetcode.com/problems/binary-tree-level-order-traversal/
-Difficulty: easy
+Difficulty: medium
 
-Given a binary tree, return the level order traversal of its nodes' values. 
+Given a binary tree, return the level order traversal of its nodes' values.
 (ie, from left to right, level by level).
 
 For example:
@@ -22,7 +22,7 @@ confused what "{1,#,2,3}" means? > read more on how binary tree is serialized on
 
 
 OJ's Binary Tree Serialization:
-The serialization of a binary tree follows a level order traversal, 
+The serialization of a binary tree follows a level order traversal,
 where '#' signifies a path terminator where no node exists below.
 
 Here's an example:
@@ -62,9 +62,9 @@ public class Solution {
         		level.add(node.val);
         		if(node.left != null) q.add(node.left);
         		if(node.right != null) q.add(node.right);
-        	} 
+        	}
         	result.add(level);
-        } 
+        }
         return result;
     }
 }

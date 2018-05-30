@@ -45,10 +45,13 @@ public class Solution {
 
         slow = reverse(slow);
         while(slow != null && head.val == slow.val){
+            if (fast.val != slow.val) {
+                return false;
+            }
         	slow = slow.next;
         	head = head.next;
         }
-        return head.val == slow.val;
+        return true;
     }
     // 1 -> 2 -> 3 -> null
     // null <- 1
