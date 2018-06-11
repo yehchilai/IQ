@@ -15,6 +15,31 @@ Note: You may assume the string contain only lowercase letters.
 
 
 */
+// LinkedHashMap, T:O(n), M:(n), 67ms
+class Solution {
+    public int firstUniqChar(String s) {
+        // linked hash table
+        // throw new Exception()
+        // store character and occurrence times.
+        Map<Character, Integer> map = new LinkedHashMap();
+        // store visited character
+        Set<Character> set = new HashSet();
+        // character index
+        int index = 0;
+        for(char c : s.toCharArray()){
+            if(set.contains(c)){
+                map.remove(c);
+            }else{
+                map.put(c, index);
+                set.add(c);
+            }
+            index++;
+        }
+        if(map.isEmpty()) return -1;
+        Map.Entry<Character, Integer> pair = map.entrySet().iterator().next();
+        return pair.getValue();
+    }
+}
 // HashMap, T:O(n), M:(n), 95ms
 public class Solution {
     public int firstUniqChar(String s) {
