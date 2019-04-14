@@ -56,8 +56,10 @@ class Solution {
 
         for(int start = 0; start < nums.length -1; start++){
             for(int end = start + 1; end < nums.length; end++){
-                if(Math.abs(nums[start] - nums[end]) == k){
+                if(Math.abs(nums[end] - nums[start]) == k){
                     set.add(Integer.toString(nums[start])+","+Integer.toString(nums[end]));
+                }else if(Math.abs(nums[end] - nums[start]) > k){
+                    break;
                 }
             }
         }

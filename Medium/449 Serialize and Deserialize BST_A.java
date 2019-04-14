@@ -23,6 +23,7 @@ Note: Do not use class member/global/static variables to store states. Your seri
  *     TreeNode(int x) { val = x; }
  * }
  */
+// preoder, T:O(N), S:O(N), 17ms
 public class Codec {
 
     // Encodes a tree to a single string.
@@ -83,3 +84,59 @@ public class Codec {
 // Your Codec object will be instantiated and called as such:
 // Codec codec = new Codec();
 // codec.deserialize(codec.serialize(root));
+
+// BFS, T:O(N), S:O(N), 27ms
+public class Codec {
+
+    // Encodes a tree to a single string.
+    public String serialize(TreeNode root) {
+        Deque<TreeNode> q = new LinkedList();
+        List<String> strList = new LinkedList();
+        q.add(root);
+        while(q.size() > 0){
+            int size = q.size();
+            for(int i = 0 ;i < size; i++){
+                TreeNode node = q.poll();
+                if(node != null){
+                    q.add(node.left);
+                    q.add(node.right);
+                    strList.add(String.valueOf(node.val));
+                }else{
+                    strList.add("null");
+                }
+            }
+        }
+        return String.join(",", strList.toArray(new String[strList.size()]));
+    }
+
+    // Decodes your encoded data to tree.
+    public TreeNode deserialize(String data) {
+        String[] nodes = data.split(",");
+        if((nodes.length == 1) && (nodes[0].equals("null"))) return null;
+        Deque<TreeNode> q = new LinkedList();
+        TreeNode head = new TreeNode(Integer.valueOf(nodes[0]));
+        q.add(head);
+        int index = 1;
+        while(q.size() > 0){
+            int size = q.size();
+            for(int i = 0; i < size; i++){
+                TreeNode node = q.poll();
+                if(nodes[index].equals("null")){
+                    node.left = null;
+                }else{
+                    node.left = new TreeNode(Integer.valueOf(nodes[index]));
+                    q.add(node.left);
+                }
+                index++;
+                if(nodes[index].equals("null")){
+                    node.right = null;
+                }else{
+                    node.right = new TreeNode(Integer.valueOf(nodes[index]));
+                    q.add(node.right);
+                }
+                index++;
+            }
+        }
+        return head;
+    }
+}
