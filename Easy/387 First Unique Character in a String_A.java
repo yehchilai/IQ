@@ -15,6 +15,7 @@ Note: You may assume the string contain only lowercase letters.
 
 
 */
+
 // LinkedHashMap, T:O(n), M:(n), 67ms
 class Solution {
     public int firstUniqChar(String s) {
@@ -40,6 +41,30 @@ class Solution {
         return pair.getValue();
     }
 }
+
+class Solution {
+    public int firstUniqChar(String s) {
+        LinkedHashMap<Character, Integer> map = new LinkedHashMap();
+        HashMap<Character, Integer> mapIndex = new HashMap();
+        int len = s.length();
+
+        for(int i = 0; i < len; i++){
+            char c = s.charAt(i);
+            int count = map.getOrDefault(c, 0);
+            if(count == 0){
+                mapIndex.put(c, i);
+            }
+            map.put(c, count + 1);
+        }
+
+        for(Map.Entry<Character, Integer> entry: map.entrySet()){
+            if(entry.getValue() == 1) return mapIndex.get(entry.getKey());
+        }
+
+        return -1;
+    }
+}
+
 // HashMap, T:O(n), M:(n), 95ms
 public class Solution {
     public int firstUniqChar(String s) {
