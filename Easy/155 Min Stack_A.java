@@ -18,6 +18,61 @@ minStack.pop();
 minStack.top();      --> Returns 0.
 minStack.getMin();   --> Returns -2.
 */
+// 46 ms
+class MinStack {
+
+    Node head;
+
+    /** initialize your data structure here. */
+    public MinStack() {
+    }
+
+    public void push(int x) {
+        if(head == null){
+            head = new Node(x, x);
+        }else{
+            Node current = new Node(x, Math.min(x, head.min));
+            current.prev = head;
+            head = current;
+        }
+
+    }
+
+    public void pop() {
+        if(head == null) return;
+
+        head = head.prev;
+    }
+
+    public int top() {
+        return head.val;
+    }
+
+    public int getMin() {
+        return head.min;
+    }
+
+}
+
+class Node{
+        Node prev;
+        int val;
+        int min;
+
+        Node(int v, int min){
+            this.val = v;
+            this.min = min;
+        }
+    }
+
+/**
+ * Your MinStack object will be instantiated and called as such:
+ * MinStack obj = new MinStack();
+ * obj.push(x);
+ * obj.pop();
+ * int param_3 = obj.top();
+ * int param_4 = obj.getMin();
+ */
 
 // New data structure, 128ms
 public class MinStack {

@@ -6,6 +6,17 @@ Given an integer, write a function to determine if it is a power of two.
 
 Time Complexity:O(N)
 */
+
+// T:O(1), S:O(1), 1ms
+class Solution {
+    public boolean isPowerOfTwo(int n) {
+        if(n <= 0) return false;
+        if(n == 1) return true;
+
+        return (n & (n - 1)) == 0 ? true : false;
+    }
+}
+
 public class Solution {
     public boolean isPowerOfTwo(int n) {
         if(n == 1) return true;

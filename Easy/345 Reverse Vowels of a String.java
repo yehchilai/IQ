@@ -13,6 +13,39 @@ Given s = "leetcode", return "leotcede".
 Note:
 The vowels does not include the letter "y".
 */
+// T:O(N), S:O(N), 8ms
+class Solution {
+    public String reverseVowels(String s) {
+        HashSet<Character> set = new HashSet();
+        set.add('a');
+        set.add('e');
+        set.add('i');
+        set.add('o');
+        set.add('u');
+
+        int lo = 0;
+        int hi = s.length() - 1;
+
+        char[] sArr = s.toCharArray();
+
+        while(lo < hi){
+            char cLo = sArr[lo];
+            char cHi = sArr[hi];
+            if(!set.contains(Character.toLowerCase(cLo))) lo++;
+            if(!set.contains(Character.toLowerCase(cHi))) hi--;
+            if(set.contains(Character.toLowerCase(cLo)) &&
+               set.contains(Character.toLowerCase(cHi))){
+                sArr[lo] = cHi;
+                sArr[hi] = cLo;
+                lo++;
+                hi--;
+            }
+        }
+
+        return new String(sArr);
+    }
+}
+
 
 // LinkedList, T:O(N), M:O(N), Time Limit Exceeded
 public class Solution {

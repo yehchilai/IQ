@@ -25,6 +25,38 @@ All root-to-leaf paths are:
  *     TreeNode(int x) { val = x; }
  * }
  */
+
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode(int x) { val = x; }
+ * }
+ */
+// T:O(N), S:O(N), 1 ms
+class Solution {
+
+    ArrayList<String> list = new ArrayList();
+
+    public List<String> binaryTreePaths(TreeNode root) {
+        if(root == null) return list;
+        preOrder(root, "");
+        return list;
+    }
+
+    public void preOrder(TreeNode node, String s){
+        if(node.left == null && node.right == null)
+            list.add(s+Integer.toString(node.val));
+        if(node.left != null)
+            preOrder(node.left, s+Integer.toString(node.val)+"->");
+        if(node.right != null)
+            preOrder(node.right, s+Integer.toString(node.val)+"->");
+
+    }
+}
+
 public class Solution {
     public List<String> binaryTreePaths(TreeNode root) {
         List<String> result = new ArrayList<String>();
@@ -46,7 +78,7 @@ public class Solution {
         ArrayList<String> paths = new ArrayList<String>();
         if(root==null) return paths;
         if(root.left==null && root.right==null) {
-            paths.add("" + root.val); 
+            paths.add("" + root.val);
             return paths;
         }
         if (root.left!=null) for (String st:binaryTreePaths(root.left)) paths.add(root.val + "->" + st);

@@ -34,3 +34,40 @@ public class Solution {
         return sb.reverse().toString();
     }
 }
+
+// T:O(m|n), M:O(M+1|M+1), 4ms
+class Solution {
+    public String addStrings(String num1, String num2) {
+        StringBuilder sb = new StringBuilder();
+
+
+        int len1 = num1.length();
+        int len2 = num2.length();
+        int i = len1 - 1;
+        int j = len2 - 1;
+        int carrier = 0;
+        while(i >= 0 || j >= 0){
+            int sum = 0;
+
+            if(i >= 0 && j >= 0){
+                int a = Character.getNumericValue(num1.charAt(i));
+                int b = Character.getNumericValue(num2.charAt(j));
+                sum = a + b + carrier;
+                i--;
+                j--;
+            }else if(i >= 0){
+                int a = Character.getNumericValue(num1.charAt(i));
+                sum = a + carrier;
+                i--;
+            }else if(j >= 0){
+                int b = Character.getNumericValue(num2.charAt(j));
+                sum = b + carrier;
+                j--;
+            }
+            carrier = sum / 10;
+            sb.append(sum%10);
+        }
+        if(carrier == 1) sb.append(carrier);
+        return sb.reverse().toString();
+    }
+}
