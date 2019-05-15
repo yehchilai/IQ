@@ -16,6 +16,38 @@ Output:
 [[5,0], [7,0], [5,2], [6,1], [4,4], [7,1]]
 
 */
+// T:O(NlogN), S:O(N), 7ms
+class Solution {
+    public int[][] reconstructQueue(int[][] people) {
+        LinkedList<int[]> ans = new LinkedList();
+
+        if(people == null || people.length == 0) return new int[0][0];
+
+        Arrays.sort(people, new Comparator<int[]>(){
+            @Override
+            public int compare(int[] a, int[] b){
+                 if(a[0] != b[0]){
+                return b[0] - a[0]; // descending
+                }else{
+                    return a[1] - b[1]; // ascnnding
+                }
+            }
+
+        });
+
+        for(int i = 0; i < people.length; i++){
+            if(people[i][1] >= ans.size()){
+                ans.addLast(people[i]);
+            }else{
+                ans.add(people[i][1], people[i]);
+            }
+        }
+
+        return ans.toArray(new int[ans.size()][2]);
+    }
+}
+
+
 // Greedy?, T:O(NlogN), M:O(N), 19ms
 public class Solution {
     public int[][] reconstructQueue(int[][] people) {
