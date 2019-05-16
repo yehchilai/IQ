@@ -17,6 +17,34 @@ Output: 28
 Explanation: The maximum result is 5 ^ 25 = 28.
 
 */
+// T:O(31*2*N), S:O(N), 75 ms
+class Solution {
+    public int findMaximumXOR(int[] nums) {
+        int mask = 0;
+        int max = 0;
+
+        for(int i = 31; i >= 0; i--){
+            mask = mask | (1 << i);
+
+            HashSet<Integer> set = new HashSet();
+
+            for(int n : nums){
+                set.add(n & mask);
+            }
+
+            int tmp = max | (1<< i);
+            for(int prefix: set){
+                if(set.contains(tmp ^ prefix)){
+                    max = tmp;
+                }
+            }
+        }
+
+        return max;
+    }
+
+}
+
 // T:O(N), M:O(N) , 104 ms, from https://discuss.leetcode.com/topic/63213/java-o-n-solution-using-bit-manipulation-and-hashmap/8
 public class Solution {
     public int findMaximumXOR(int[] nums) {
