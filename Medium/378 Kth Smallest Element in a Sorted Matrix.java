@@ -20,6 +20,42 @@ Note:
 You may assume k is always valid, 1 ≤ k ≤ n2.
 */
 
+// T:O(NlogN), S:O(N), 22 ms
+class Solution {
+    public int kthSmallest(int[][] matrix, int k) {
+        if(matrix == null || matrix.length == 0) return 0;
+        int row = matrix.length;
+        int col = matrix[0].length;
+
+        PriorityQueue<Integer> pq = new PriorityQueue(Collections.reverseOrder());
+
+        for(int r = 0; r < row; r++){
+            for(int c = 0; c < col; c++){
+                if(pq.size() == k){
+                    int top = pq.poll();
+                    int min = Math.min(top, matrix[r][c]);
+                    pq.add(min);
+                }else{
+                    pq.add(matrix[r][c]);
+                }
+            }
+        }
+
+        return pq.peek();
+//         PriorityQueue<Integer> pq = new PriorityQueue();
+//         for(int r = 0; r < row; r++){
+//             for(int c = 0; c < col; c++){
+//                 pq.add(matrix[r][c]);
+//             }
+//         }
+
+//         for(int i = 0; i < k - 1; i++){
+//             pq.poll();
+//         }
+//         return pq.peek();
+    }
+}
+
 // heap, T:O(nlogn), M:O(n), 47ms
 public class Solution {
     public int kthSmallest(int[][] matrix, int k) {
