@@ -20,6 +20,49 @@ solution.getRandom();
 
 */
 
+// https://www.itread01.com/content/1545432309.html
+// reservoir sampling
+// T:O(N), S:O(1), 60 ms
+class Solution {
+
+    ListNode mHead;
+
+    /** @param head The linked list's head.
+        Note that the head is guaranteed to be not null, so it contains at least one node. */
+    public Solution(ListNode head) {
+        mHead = head;
+
+    }
+
+    /** Returns a random node's value. */
+    public int getRandom() {
+        ListNode node = mHead;
+        if(node == null) return 0;
+
+        int i = 1;
+        Random random = new Random();
+        int val = node.val;
+        int k = 1;
+        // System.out.println(random.nextInt(1+1));
+        // return 0;
+        while(node.next != null){
+            node = node.next;
+            int r = random.nextInt(i + 1) + 1;
+            if(r <= k){
+                val = node.val;
+            }
+
+            i++;
+
+        }
+
+        return val;
+    }
+
+
+}
+
+
 // T:O(N), M:O(1), 152ms
 /**
  * Definition for singly-linked list.

@@ -26,6 +26,51 @@ What if negative numbers are allowed in the given array?
 How does it change the problem?
 What limitation we need to add to the question to allow negative numbers?
 */
+// DP, T:O(N*M), S:O(M), 2 ms
+class Solution {
+    public int combinationSum4(int[] nums, int target) {
+        Arrays.sort(nums);
+
+        int[] ans = new int[target + 1];
+
+        for(int i = 0; i <= target; i++){
+            for(int n : nums){
+                if(n > i){
+                    break;
+                }else if(n == i){
+                    ans[i]++;
+                }else{
+                    ans[i] = ans[i] + ans[i - n];
+                }
+            }
+        }
+
+        return ans[target];
+    }
+}
+
+// combination, T:O(2^N), S:O(1), Time Limit Exceeded
+class Solution {
+
+    int ans;
+
+    public int combinationSum4(int[] nums, int target) {
+
+        sum(0, nums, target);
+
+        return ans;
+    }
+
+    private void sum(int current, int[] nums, int target){
+        for(int i = 0 ; i < nums.length; i++){
+            int sum = current + nums[i];
+
+            if(sum == target) ans++;
+
+            if(sum < target) sum(sum, nums, target);
+        }
+    }
+}
 
 // Dynamic programming, T:O(NM), M:O(N), 5ms
 public class Solution {
