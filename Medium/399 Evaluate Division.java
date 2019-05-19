@@ -21,64 +21,61 @@ queries = [ ["a", "c"], ["b", "a"], ["a", "e"], ["a", "a"], ["x", "x"] ].
 The input is always valid. You may assume that evaluating the queries will result in no division by zero and there is no contradiction.
 */
 
-// T:O(N * q), S:O(N),
+// T:O(N * q), S:O(N), 1 ms
 class Solution {
 
     HashMap<String, HashMap<String, Double>> graph;
 
-    public double[] calcEquation(String[][] equations, double[] values, String[][] queries) {
+    public double[] calcEquation(List<List<String>> equations, double[] values, List<List<String>> queries) {
+
         graph = getGraph(equations, values);
+        double[] ans = new double[queries.size()];
 
-        double[] ans = new double[queries.length];
-
-        for(int i = 0; i < queries.length; i++){
-            HashSet<String> visited = new HashSet();
-            ans[i] = dfs(queries[i][0], queries[i][i], visited);
+        for(int i = 0; i < queries.size(); i++){
+            String top = queries.get(i).get(0);
+            String bottom = queries.get(i).get(1);
+            HashSet<String> set = new HashSet();
+            ans[i] = dfs(top, bottom, set);
         }
+
 
         return ans;
     }
 
+    private double dfs(String top, String bottom, HashSet<String> set){
+        if(!graph.containsKey(top)) return -1;
 
-    private double dfs(String a, String b, HashSet<String> visited){
+        if(graph.get(top).containsKey(bottom))
+            return graph.get(top).get(bottom);
 
-        if(!graph.containsKey(a)){
-            return -1.0
-        }
-
-        if(graph.get(a).containsKey(b)){
-            return graph.get(a).get(b);
-        }
-
-        visited.add(a);
-
-        for(Map.Entry<String, Double> neighbor: graph.get(a).entrySet()){
-
-            if(!visited.contains(neighbor.getKey())){
-                double val = dfs(neighbor.getKey(), b, visited);
-                if(val != -1.0) return val * neighbor.getValue();
+        set.add(top);
+        for(Map.Entry<String, Double> entry: graph.get(top).entrySet()){
+            String newTop = entry.getKey();
+            if(!set.contains(newTop)){
+                double val = dfs(newTop, bottom, set);
+                if( val != -1) return val * entry.getValue();
             }
+
         }
 
-        return -1.0;
+        return -1;
     }
 
+    private HashMap<String, HashMap<String, Double>> getGraph(List<List<String>> equations, double[] values){
 
-    private HashMap<String, HashMap<String, Double>> getGraph(String[][] equations, double[] values){
         HashMap<String, HashMap<String, Double>> g = new HashMap();
 
-        for(int i = 0; i < values.length; i++){
-            String a = equations[i][0];
-            String b = equations[i][1];
-
-            // a -> b
-            HashMap<String, Double> pathAB = g.getOrDefault(a, new HashMap<String, Double>());
-            pathAB.put(b, values[i]);
-            g.put(a, pathAB);
+        for(int i = 0; i < equations.size(); i++){
+            String a = equations.get(i).get(0);
+            String b = equations.get(i).get(1);
+            // a->b
+            HashMap<String, Double> ab = g.getOrDefault(a, new HashMap<String, Double>());
+            ab.put(b, values[i]);
+            g.put(a, ab);
             // b -> a
-            HashMap<String, Double> pathBA = g.getOrDefault(b, new HashMap<String, Double>());
-            pathBA.put(a, 1 / values[i]);
-            g.put(b, pathBA);
+            HashMap<String, Double> ba = g.getOrDefault(b, new HashMap<String, Double>());
+            ba.put(a, 1 / values[i]);
+            g.put(b, ba);
         }
 
         return g;
