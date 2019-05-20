@@ -24,6 +24,51 @@ Explanation: 342 + 465 = 807.
  *     ListNode(int x) { val = x; }
  * }
  */
+
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode(int x) { val = x; }
+ * }
+ */
+// T:O(N), S:O(N), 2 ms
+class Solution {
+    public ListNode addTwoNumbers(ListNode l1, ListNode l2) {
+        int carrier = 0;
+        ListNode ansHead = new ListNode(0);
+        ListNode node = ansHead;
+
+        while(l1 != null || l2 != null){
+            int n1 = 0;
+            int n2 = 0;
+
+            if(l1 != null){
+                n1 = l1.val;
+                l1 = l1.next;
+            }
+            if(l2 != null){
+                n2 = l2.val;
+                l2 = l2.next;
+            }
+
+            int sum = n1 + n2 + carrier;
+            carrier = sum/10;
+            int n = sum%10;
+
+            node.next = new ListNode(n);
+            node = node.next;
+        }
+
+        if(carrier == 1) node.next = new ListNode(1);
+        return ansHead.next;
+    }
+}
+
+
+
+// 56 ms
 class Solution {
     public ListNode addTwoNumbers(ListNode l1, ListNode l2) {
 
