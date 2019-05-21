@@ -24,6 +24,52 @@ Input:
 Output: 3
 
 */
+// T:O(N*M), S:O(N*M), 2 ms
+class Solution {
+
+    char[][] graph;
+    boolean[][] visited;
+    int[][] direction;
+
+    public int numIslands(char[][] grid) {
+        if(grid == null || grid.length == 0 ) return 0;
+
+        graph = grid;
+        int row = grid.length;
+        int col = grid[0].length;
+
+        visited = new boolean[row][col];
+        direction = new int[][]{{-1,0}, {1,0}, {0,1}, {0, -1}};
+
+        int islands = 0;
+        for(int r = 0; r < row; r++){
+            for(int c = 0; c < col; c++){
+                if(visited[r][c] == false && grid[r][c] == '1'){
+                    islands++;
+                    dfs(r, c, row, col);
+                }
+
+
+            }
+        }
+
+        return islands;
+    }
+
+    private void dfs(int r, int c, int row, int col){
+        if(visited[r][c] == false && graph[r][c] == '1'){
+            visited[r][c] = true;
+            for(int i = 0; i < direction.length; i++){
+                int newRow = direction[i][0] + r;
+                int newCol = direction[i][1] + c;
+                if(newRow >= 0 && newRow < row && newCol >= 0 && newCol < col){
+                    dfs(newRow, newCol, row, col);
+                }
+            }
+        }
+    }
+}
+
 // dfs, T:O(NxM), S:O(1),
 class Solution {
     public int numIslands(char[][] grid) {
