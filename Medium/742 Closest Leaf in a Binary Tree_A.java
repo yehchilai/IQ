@@ -60,6 +60,55 @@ There exists some node in the given binary tree for which node.val == k.
  *     TreeNode(int x) { val = x; }
  * }
  */
+
+// DFS generate graph and BFS get answer, T:O(N), S:O(N), 6 ms
+class Solution {
+    public int findClosestLeaf(TreeNode root, int k) {
+        HashMap<TreeNode, List<TreeNode>> graph = new HashMap();
+
+        dfs(root, null, graph);
+
+        LinkedList<TreeNode> q = new LinkedList();
+        HashSet<TreeNode> visited = new HashSet();
+
+        for(TreeNode node: graph.keySet()){
+            if(node.val == k) q.add(node);
+        }
+
+        while(q.size() > 0){
+            TreeNode node = q.poll();
+
+            visited.add(node);
+
+            if(node.left == null && node.right == null) return node.val;
+
+            List<TreeNode> list = graph.get(node);
+
+            for(TreeNode neighbor: list){
+                if(!visited.contains(neighbor)){
+                    q.add(neighbor);
+                }
+            }
+
+        }
+
+        throw new Error();
+    }
+
+    private void dfs(TreeNode node, TreeNode parent, HashMap<TreeNode, List<TreeNode>> graph){
+        if(node == null) return;
+
+        List<TreeNode> list = graph.getOrDefault(node, new LinkedList<TreeNode>());
+        if(parent != null) list.add(parent);
+        if(node.left != null) list.add(node.left);
+        if(node.right != null) list.add(node.right);
+        graph.put(node, list);
+
+        dfs(node.left, node, graph);
+        dfs(node.right, node, graph);
+    }
+}
+
 // DFS and BFS, T:O(N), S:O(N), 41ms
 class Solution {
     public int findClosestLeaf(TreeNode root, int k) {
