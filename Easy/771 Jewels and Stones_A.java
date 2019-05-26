@@ -20,6 +20,26 @@ S and J will consist of letters and have length at most 50.
 The characters in J are distinct.
 
 */
+// T:O(N), S:O(N), 2 ms
+class Solution {
+    public int numJewelsInStones(String J, String S) {
+        int lenJ = J.length();
+        HashSet<Character> set = new HashSet();
+        for(int i = 0 ; i < lenJ; i++){
+            set.add(J.charAt(i));
+        }
+
+        int lenS = S.length();
+        int ans = 0;
+
+        for(int i = 0; i < lenS; i++){
+            if(set.contains(S.charAt(i))) ans++;
+        }
+
+        return ans;
+    }
+}
+
 class Solution {
     public int numJewelsInStones(String J, String S) {
         HashMap<Character, Integer> stones = new HashMap();
