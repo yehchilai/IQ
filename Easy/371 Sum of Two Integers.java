@@ -14,13 +14,12 @@ public class Solution {
     public int getSum(int a, int b) {
         int result = a ^ b; //XOR
         int carry = (a & b) << 1;
-        int result = 0;
         if(carry != 0){
             result = getSum(result, carry);
         }else{
             result = result;
         }
-        
+
         return result;
     }
 }
