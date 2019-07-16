@@ -14,7 +14,7 @@ Here is an example of version numbers ordering:
 0.1 < 1.1 < 1.2 < 13.37
 
 */
-// String manipulation, T:O(n or m), M:O(n+m), 3ms
+// String manipulation, T:O(n or m), M:O(n+m), 1ms
 public class Solution {
     public int compareVersion(String version1, String version2) {
         String[] ver1 = version1.split("\\.");
@@ -32,6 +32,33 @@ public class Solution {
             }
         }
 
+        return 0;
+    }
+}
+
+// T:O(N), S:O(N+M), 2 ms
+class Solution {
+    public int compareVersion(String version1, String version2) {
+        String[] v1 = version1.split("\\.");
+        String[] v2 = version2.split("\\.");
+        System.out.println(Arrays.toString(v1));
+        System.out.println(Arrays.toString(v2));
+        int index = 0;
+
+        while(index < v1.length || index < v2.length){
+            if(index < v1.length && index < v2.length){
+                if(Integer.valueOf(v1[index]) > Integer.valueOf(v2[index])){
+                    return 1;
+                }else if(Integer.valueOf(v1[index]) < Integer.valueOf(v2[index])){
+                    return -1;
+                }
+            }else if(index < v1.length){
+                if(Integer.valueOf(v1[index]) > 0) return 1;
+            }else if(index < v2.length){
+                if(Integer.valueOf(v2[index]) > 0) return -1;
+            }
+            index++;
+        }
         return 0;
     }
 }
