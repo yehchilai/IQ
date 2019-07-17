@@ -12,6 +12,42 @@ You may assume k is always valid, 1 ≤ k ≤ number of unique elements.
 Your algorithm's time complexity must be better than O(n log n), where n is the array's size.
 
 */
+// HashMap and Heap, T:O(NlogN), M:O(N), 10ms
+class Solution {
+    public List<Integer> topKFrequent(int[] nums, int k) {
+
+        HashMap<Integer, Integer> map = new HashMap();
+
+        for(int i = 0; i < nums.length; i++){
+            map.put(nums[i], map.getOrDefault(nums[i], 0) + 1);
+        }
+
+        PriorityQueue<int[]> pq = new PriorityQueue(new ElementCompare());
+
+        for(Map.Entry<Integer, Integer> entry: map.entrySet()){
+            pq.add(new int[]{entry.getKey(), entry.getValue()});
+        }
+
+        List<Integer> ans = new LinkedList();
+
+        while(k > 0){
+            ans.add(pq.poll()[0]);
+            k--;
+        }
+
+        return ans;
+    }
+}
+
+class ElementCompare implements Comparator<int[]>{
+    @Override
+    public int compare(int[] a, int[] b){
+        return b[1] - a[1];
+    }
+}
+
+
+
 // HashMap and Heap, T:O(NlogN), M:O(N), 37ms
 public class Solution {
     public List<Integer> topKFrequent(int[] nums, int k) {
