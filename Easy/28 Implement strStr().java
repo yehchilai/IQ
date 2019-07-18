@@ -6,7 +6,69 @@ Implement strStr().
 
 Returns the index of the first occurrence of needle in haystack, or -1 if needle is not part of haystack.
 */
-// (10ms) from https://leetcode.com/discuss/46047/elegant-java-solution
+
+// O(m+n) KMP pattern matching
+// https://www.youtube.com/watch?v=GTJr8OvyEVQ
+class Solution {
+    public int strStr(String haystack, String needle) {
+        if(haystack == null || needle == null || needle.length() > haystack.length()) return -1;
+
+        int[] parr = kmpPreprocess(needle);
+        int i = 0, j = 0;
+        while(i < haystack.length() && j < needle.length()) {
+            if(haystack.charAt(i) == needle.charAt(j)) {
+                i++; j++;
+            } else if(j > 0) {
+                j = parr[j - 1];
+            } else {
+                i++;
+            }
+        }
+        return j == needle.length() ? i - j : -1;
+    }
+
+    private int[] kmpPreprocess(String pattern) {
+        int i = 1, j = 0;
+        int[] res = new int[pattern.length()];
+        while(i < pattern.length()) {
+            if(pattern.charAt(i) == pattern.charAt(j)) {
+                res[i] = j+1;
+                i++; j++;
+            } else if (j > 0) {
+                j = res[j-1];
+            } else {
+                res[i] = 0;
+                i++;
+            }
+        }
+        return res;
+    }
+}
+
+// T:O(M*N), S:O(1), 9 ms (13%)
+class Solution {
+    public int strStr(String haystack, String needle) {
+        if(needle == null || needle.length() == 0) return 0;
+
+        int len = haystack.length();
+        int lenNeedle = needle.length();
+
+        for(int i = 0; i <= len - lenNeedle;i++){
+            char c = haystack.charAt(i);
+
+            if(c == needle.charAt(0)) {
+                String str = haystack.substring(i, i + lenNeedle);
+                System.out.println(haystack + ": " + str);
+                if(str.equals(needle)) return i;
+            }
+        }
+
+        return -1;
+    }
+
+}
+
+// (3 ms/ 33.37%) from https://leetcode.com/discuss/46047/elegant-java-solution
 public class Solution {
     public int strStr(String haystack, String needle) {
         for(int i = 0 ; ; i++){
@@ -24,7 +86,7 @@ public class Solution {
     public int strStr(String haystack, String needle) {
         if(haystack.length() < needle.length()) return -1;
         if(needle.length() == 0) return 0;
-        
+
         int i = 0;
         int j = 0;
         int index = -1;

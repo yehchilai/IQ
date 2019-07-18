@@ -7,7 +7,41 @@ Input is guaranteed to be within the range from 1 to 3999.
 
 Time Complexity: O(N)
 */
-// This anwser is from https://leetcode.com/discuss/77060/java-easy-version-to-understand 
+// T:O(N), S:O(1), 6 ms (52%)
+class Solution {
+    public int romanToInt(String s) {
+        if(s == null || s.length() == 0) return 0;
+        Map<Character, Integer> map = new HashMap();
+
+        map.put('I', 1);
+        map.put('V', 5);
+        map.put('X', 10);
+        map.put('L', 50);
+        map.put('C', 100);
+        map.put('D', 500);
+        map.put('M', 1000);
+
+        char[] arr = s.toCharArray();
+
+        int sum = 0;
+        int prev = map.get(arr[arr.length - 1]);
+        sum = sum + prev;
+        for(int i = arr.length - 2; i >= 0 ; i--){
+            int current = map.get(arr[i]);
+            if(current < prev){
+                sum = sum - current;
+            }else{
+                sum = sum + current;
+            }
+
+            prev = current;
+        }
+
+        return sum;
+    }
+}
+
+// This anwser is from https://leetcode.com/discuss/77060/java-easy-version-to-understand
 public class Solution {
     public int romanToInt(String s) {
     	Map<Character,Integer> map = new HashMap<Character,Integer>();

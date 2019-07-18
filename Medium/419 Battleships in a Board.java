@@ -21,6 +21,28 @@ Follow up:
 Could you do it in one-pass, using only O(1) extra memory and without modifying the value of the board?
 
 */
+// T:O(N*M), S:O(1), 1 ms (95%)
+class Solution {
+    public int countBattleships(char[][] board) {
+        if(board == null || board.length == 0) return 0;
+
+        int result = 0;
+        int row = board.length;
+        int col = board[0].length;
+
+        for(int r = 0 ; r < row; r++){
+            for(int c = 0; c < col; c++){
+                if(board[r][c] == '.') continue;
+                if(r > 0 && board[r - 1][c] == 'X') continue;
+                if(c > 0 && board[r][c - 1] == 'X') continue;
+
+                result++;
+            }
+        }
+
+        return result;
+    }
+}
 
 // T:O(N^2), M:O(1), 3ms
 public class Solution {

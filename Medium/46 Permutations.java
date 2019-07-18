@@ -16,6 +16,37 @@ For example,
 ]
 
 */
+// T:O(N!), S:O(N!), 2 ms (27%)
+class Solution {
+
+    List<List<Integer>> ans;
+
+    public List<List<Integer>> permute(int[] nums) {
+        ans = new LinkedList();
+        if(nums == null || nums.length == 0) return ans;
+
+        backtracking(nums, new LinkedList<Integer>());
+
+        return ans;
+    }
+
+    private void backtracking(int[] nums, List<Integer> list){
+        if(list.size() == nums.length) {
+            ans.add(new LinkedList<Integer>(list));
+            return;
+        }
+
+        for(int i = 0; i < nums.length; i++){
+            if(list.contains(nums[i])) continue;
+            list.add(nums[i]);
+            backtracking(nums, list);
+            list.remove(list.size() - 1);
+        }
+
+    }
+}
+
+
 // backtrack, T:O(N!), M:O(N!), 9ms
 public class Solution {
     public List<List<Integer>> permute(int[] nums) {
