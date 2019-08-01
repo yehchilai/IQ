@@ -10,6 +10,23 @@ The number of elements initialized in nums1 and nums2 are m and n respectively.
 
 Time complexity: O()
 */
+// T:O(n+m), S:O(1), 0 ms
+class Solution {
+    public void merge(int[] nums1, int m, int[] nums2, int n) {
+        int i = m - 1;
+        int j = n - 1;
+        for(int k = m+n -1; k >= 0; k--){
+            if(i < 0 || (j >= 0 && nums2[j] >= nums1[i])){
+                nums1[k] = nums2[j];
+                j--;
+            }else{
+                nums1[k] = nums1[i];
+                i--;
+            }
+        }
+    }
+}
+
 // T:O(n+m), S:O(n+m), 0 ms
 class Solution {
     public void merge(int[] nums1, int m, int[] nums2, int n) {

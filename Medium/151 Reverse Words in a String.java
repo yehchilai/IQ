@@ -35,6 +35,24 @@ Follow up:
 For C programmers, try to solve it in-place in O(1) extra space.
 */
 
+// T:O(N), S:O(N), 2 ms (83.96%)
+class Solution{
+
+    public String reverseWords(String s) {
+        List<String> list = new LinkedList();
+        String[] arr = s.split(" ");
+
+        for(int i = 0; i < arr.length; i++){
+            if(!arr[i].equals("")) list.add(arr[i]);
+        }
+
+        Collections.reverse(list);
+
+        return "".join(" ", list.toArray(new String[list.size()]));
+    }
+}
+
+
 // T:O(N), S:O(N), 5 ms
 class Solution {
     public String reverseWords(String s) {
