@@ -25,6 +25,25 @@ Input: s = "catsandog", wordDict = ["cats", "dog", "sand", "and", "cat"]
 Output: false
 
 */
+
+// dynamic programming. T:O(N^2), S:O(N), 5 ms (55.74% )
+public class Solution {
+    public boolean wordBreak(String s, List<String> wordDict) {
+        Set<String> wordDictSet=new HashSet(wordDict);
+        boolean[] dp = new boolean[s.length() + 1];
+        dp[0] = true;
+        for (int i = 1; i <= s.length(); i++) {
+            for (int j = 0; j < i; j++) {
+                if (dp[j] && wordDictSet.contains(s.substring(j, i))) {
+                    dp[i] = true;
+                    break;
+                }
+            }
+        }
+        return dp[s.length()];
+    }
+}
+
 // T: O(n^2), S: O(n)
 class Solution {
     public boolean wordBreak(String s, List<String> wordDict) {
@@ -97,20 +116,32 @@ public class Solution {
     }
 }
 
-// dynamic programming
-public class Solution {
-    public boolean wordBreak(String s, List<String> wordDict) {
-        Set<String> wordDictSet=new HashSet(wordDict);
-        boolean[] dp = new boolean[s.length() + 1];
-        dp[0] = true;
-        for (int i = 1; i <= s.length(); i++) {
-            for (int j = 0; j < i; j++) {
-                if (dp[j] && wordDictSet.contains(s.substring(j, i))) {
-                    dp[i] = true;
-                    break;
-                }
-            }
-        }
-        return dp[s.length()];
-    }
-}
+//"aaaaaaa"
+//["aaaa","aaa"]
+// get worng on this case
+// class Solution {
+//     public boolean wordBreak(String s, List<String> wordDict) {
+
+//         // create a hash set with the word dictionary
+//         HashSet<String> dict = new HashSet(wordDict);
+//         int start = 0;
+//         int len = s.length();
+//         while(start < len){
+//             for(int end = start; end < len; end++){
+//                 String newS = s.substring(start, end + 1);
+//                 System.out.println(newS);
+//                 if(dict.contains(newS)){
+//                     start = end;
+//                     if(end == len - 1) return true;
+//                     break;
+//                 }else{
+//                     if(end == len - 1) return false;
+//                 }
+//             }
+//             start++;
+//         }
+
+//         return false;
+
+//     }
+// }
